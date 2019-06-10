@@ -35,9 +35,13 @@ class CustomerCreditTransferInformation extends BaseTransferInformation
         parent::__construct($amount, $iban, $name);
 
         if (null === $identification) {
-            $identification = $name;
+            $dt = new \DateTime();
+            $identification = $dt->format('YmdHisu');
+        } else {
+            //sets creditor id only if identification is specified
+            $this->setCreditorId($identification);
         }
-
+        
         $this->setEndToEndIdentification($identification);
     }
 

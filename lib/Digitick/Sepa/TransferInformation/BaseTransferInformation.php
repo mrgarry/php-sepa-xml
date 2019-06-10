@@ -77,6 +77,12 @@ class BaseTransferInformation implements TransferInformationInterface
     protected $remittanceInformation;
 
     /**
+     * Creditor id (max len 35 chars)
+     * @var string
+     */
+    protected $creditorId;
+    
+    /**
      * Structured creditor reference type.
      *
      * @var string
@@ -210,6 +216,23 @@ class BaseTransferInformation implements TransferInformationInterface
         return $this->bic;
     }
 
+    /**
+     * Sets creditor company number/registration code
+     * @param string $creditorId
+     */
+    public function setCreditorId($creditorId)
+    {
+        $this->creditorId = $creditorId;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getCreditorId()
+    {
+        return $this->creditorId;
+    }
+    
     /**
      * @param string $creditorReference
      */

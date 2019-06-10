@@ -177,6 +177,7 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
         // Creditor address if needed and supported by schema.
         if (in_array($this->painFormat, array('pain.001.001.03'))) {
             $this->appendAddressToDomElement($creditor, $transactionInformation);
+            $this->appendIdentificationToDomElement($creditor, $transactionInformation);
         }
 
         $CdtTrfTxInf->appendChild($creditor);
@@ -288,5 +289,22 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
         }
 
         $creditor->appendChild($postalAddress);
+    }
+    
+    /**
+     * Appends an id code node to the passed dom element containing company registracion number
+     * Does nothing if no id exists in $transactionInformation.
+     * @param \DOMElement $creditor
+     * @param CustomerCreditTransferInformation $transactionInformation
+     * @return void
+     */
+    protected function appendIdentificationToDomElement(\DOMElement $creditor, CustomerCreditTransferInformation $transactionInformation)
+    {
+        if (!$transactionInformation->getCreditorId()) {
+            return; //no id exists, nothing to do
+        }
+        
+        $creditorIdNode = $this->createElement('Id', $transactionInformation->getCreditorId());
+        $creditor->appendChild($creditorIdNode);
     }
 }

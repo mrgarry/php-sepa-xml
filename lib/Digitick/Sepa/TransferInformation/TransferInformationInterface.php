@@ -28,6 +28,8 @@ interface TransferInformationInterface
 {
     public function accept(DomBuilderInterface $domBuilder);
 
+    public function getCreditorId();
+    
     public function getTransferAmount();
 
     public function getEndToEndIdentification();
