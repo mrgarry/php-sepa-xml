@@ -304,7 +304,16 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
             return; //no id exists, nothing to do
         }
         
-        $creditorIdNode = $this->createElement('Id', $transactionInformation->getCreditorId());
+        $creditorIdNode = $this->createElement('Id');
         $creditor->appendChild($creditorIdNode);
+        
+        $orgIdNode = $this->createElement('OrgId');
+        $creditorIdNode->appendChild($orgIdNode);
+        
+        $othrNode = $this->createElement('Othr');
+        $orgIdNode->appendChild($othrNode);
+        
+        $idNode = $this->createElement('Id', $transactionInformation->getCreditorId());
+        $othrNode->appendChild($idNode);
     }
 }
