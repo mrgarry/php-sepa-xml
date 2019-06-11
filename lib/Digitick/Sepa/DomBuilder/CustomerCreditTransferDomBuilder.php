@@ -176,8 +176,8 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
 
         // Creditor address if needed and supported by schema.
         if (in_array($this->painFormat, array('pain.001.001.03'))) {
-            $this->appendIdentificationToDomElement($creditor, $transactionInformation);
             $this->appendAddressToDomElement($creditor, $transactionInformation);
+            $this->appendIdentificationToDomElement($creditor, $transactionInformation);
         }
 
         $CdtTrfTxInf->appendChild($creditor);
@@ -320,5 +320,12 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
         
         $idNode = $this->createElement('Id', $transactionInformation->getCreditorId());
         $othrNode->appendChild($idNode);
+        
+        $schemaNameNode = $this->createElement('SchmeNm');
+        $othrNode->appendChild($schemaNameNode);
+        
+        $typeCodeNode = $this->createElement('Cd', $transactionInformation->getCreditorIdTypeCode());
+        $schemaNameNode->appendChild($typeCodeNode);
     }
+    
 }

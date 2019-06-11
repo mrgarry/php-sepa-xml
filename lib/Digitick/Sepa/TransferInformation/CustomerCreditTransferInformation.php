@@ -30,16 +30,20 @@ class CustomerCreditTransferInformation extends BaseTransferInformation
      * @param string $name
      * @param string $identification
      */
-    public function __construct($amount, $iban, $name, $identification = null, $creditorType = BaseTransferInformation::CREDITOR_TYPE_COMPANY)
+    public function __construct($amount, $iban, $name, $identification = null, $typeCode = null, $creditorType = BaseTransferInformation::CREDITOR_TYPE_COMPANY)
     {
         parent::__construct($amount, $iban, $name);
 
-        if (null === $identification) {
+        if ($identification === null) {
             $dt = new \DateTime();
             $identification = $dt->format('YmdHisu');
         } else {
             //sets creditor id only if identification is specified
             $this->setCreditorId($identification);
+            if ($typeCode == null) {
+                throw new InvalidArgumentException('Creditor id type must be specified too, if id is specified');
+            }
+            $this->setCreditorIdTypeCode($typeCode);
             //checking type, defaulting to company
             if (!in_array($creditorType, [static::CREDITOR_TYPE_COMPANY, static::CREDITOR_TYPE_INDIVIDUAL])) {
                 throw new InvalidArgumentException('Creditor type must be either company or individual (defaults to company if omited)');

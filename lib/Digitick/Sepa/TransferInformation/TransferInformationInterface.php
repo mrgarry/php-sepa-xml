@@ -31,6 +31,15 @@ interface TransferInformationInterface
     public function getCreditorId();
     
     /**
+     * Returns type code of id (usually COID for legal entities, NIDN for natural)
+     * Complete list here:
+     * https://www.iso20022.org/external_code_list.page
+     * 
+     * @return string
+     */
+    public function getCreditorIdTypeCode();
+    
+    /**
      * Returns wether creditor is 'individual'|'company'
      */
     public function getCreditorType();

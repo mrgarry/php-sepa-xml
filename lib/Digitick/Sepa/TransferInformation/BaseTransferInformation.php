@@ -87,6 +87,13 @@ class BaseTransferInformation implements TransferInformationInterface
     protected $creditorId;
     
     /**
+     * Creditor id type code from
+     * https://www.iso20022.org/external_code_list.page
+     * @var string 
+     */
+    protected $creditorIdTypeCode;
+    
+    /**
      * Structured creditor reference type.
      *
      * @var string
@@ -238,10 +245,27 @@ class BaseTransferInformation implements TransferInformationInterface
     /**
      * @return string
      */
+    public function getCreditorIdTypeCode()
+    {
+        return $this->creditorIdTypeCode;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setCreditorIdTypeCode($creditorIdTypeCode)
+    {
+        $this->creditorIdTypeCode = $creditorIdTypeCode;
+    }
+    
+    /**
+     * @return string
+     */
     public function getCreditorId()
     {
         return $this->creditorId;
     }
+    
     
     /**
      * @param string $creditorReference
