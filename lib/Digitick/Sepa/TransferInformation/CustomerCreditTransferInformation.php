@@ -30,7 +30,7 @@ class CustomerCreditTransferInformation extends BaseTransferInformation
      * @param string $name
      * @param string $identification
      */
-    public function __construct($amount, $iban, $name, $identification = null, $creditorType = static::CREDITOR_TYPE_COMPANY)
+    public function __construct($amount, $iban, $name, $identification = null, $creditorType = BaseTransferInformation::CREDITOR_TYPE_COMPANY)
     {
         parent::__construct($amount, $iban, $name);
 
