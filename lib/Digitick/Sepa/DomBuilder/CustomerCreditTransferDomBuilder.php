@@ -307,7 +307,12 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
         $creditorIdNode = $this->createElement('Id');
         $creditor->appendChild($creditorIdNode);
         
-        $orgIdNode = $this->createElement('OrgId');
+        $nodeName = $transactionInformation->getCreditorType() == CustomerCreditTransferInformation::CREDITOR_TYPE_COMPANY 
+            ? 'OrgId'
+            : 'PrvtId'
+        ;
+        
+        $orgIdNode = $this->createElement($nodeName);
         $creditorIdNode->appendChild($orgIdNode);
         
         $othrNode = $this->createElement('Othr');

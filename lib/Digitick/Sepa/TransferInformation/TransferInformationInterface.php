@@ -30,6 +30,11 @@ interface TransferInformationInterface
 
     public function getCreditorId();
     
+    /**
+     * Returns wether creditor is 'individual'|'company'
+     */
+    public function getCreditorType();
+    
     public function getTransferAmount();
 
     public function getEndToEndIdentification();

@@ -28,6 +28,10 @@ use Digitick\Sepa\Util\StringHelper;
 
 class BaseTransferInformation implements TransferInformationInterface
 {
+    const CREDITOR_TYPE_COMPANY = 'company';
+    
+    const CREDITOR_TYPE_INDIVIDUAL = 'individual';
+    
     /**
      * Account Identifier
      *
@@ -96,6 +100,12 @@ class BaseTransferInformation implements TransferInformationInterface
      */
     protected $creditorReference;
 
+    /**
+     * company|individual
+     * @var string 
+     */
+    protected $creditorType;
+    
     /**
      * @var string
      */
@@ -265,7 +275,23 @@ class BaseTransferInformation implements TransferInformationInterface
         return $this->creditorReferenceType;
     }
 
-
+    /**
+     * Sets creditor type for creditor id fields in the xml (either OrgId|PrvtId)
+     * @param string $creditorType
+     */
+    public function setCreditorType($creditorType)
+    {
+        $this->creditorType = $creditorType;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getCreditorType()
+    {
+        return $this->creditorType;
+    }
+    
     /**
      * @param string $remittanceInformation
      */
