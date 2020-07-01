@@ -189,6 +189,12 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
         $creditorAccount->appendChild($id);
         $CdtTrfTxInf->appendChild($creditorAccount);
 
+        // regulatory 2.89
+        $regulatoryReporting = $this->getRegulatoryReporting($transactionInformation);
+        if ($regulatoryReporting) {
+            $CdtTrfTxInf->appendChild($regulatoryReporting);
+        }
+        
         // remittance 2.98 2.99
         if (strlen($transactionInformation->getCreditorReference()) > 0)
         {
@@ -326,6 +332,56 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
         
         $typeCodeNode = $this->createElement('Cd', $transactionInformation->getCreditorIdTypeCode());
         $schemaNameNode->appendChild($typeCodeNode);
+    }
+    
+    /**
+     * Processes and returns RegulatoryReporting element if it is defined
+     * @param CustomerCreditTransferInformation $transactionInformation
+     * @return \DOMElement|null
+     */
+    protected function getRegulatoryReporting(CustomerCreditTransferInformation $transactionInformation)
+    {
+        $regulatoryData = $transactionInformation->getRegulatoryReporting();
+        
+        if (!$regulatoryData) {
+            return null;
+        }
+        
+        $regulatoryDom = $this->createElement('RgltryRptg');
+        $this->processRegulatory($regulatoryDom, $regulatoryData);
+        
+        return $regulatoryDom;
+    }
+    
+    /**
+     * Recursively fills in all fields for RgltryRptg block
+     * @param \DOMElement $element
+     * @param array $nodes
+     */
+    protected function processRegulatory(\DOMElement $element, array $nodes)
+    {
+        foreach ($nodes as $key => $value) {
+            
+            if (is_array($value) && !isset($value['attributes']) && !isset($value['value'])) {
+                
+                $newObject = $this->createElement($key);
+                $element->appendChild($newObject);
+                $this->processRegulatory($newObject, $value);
+                
+            } else {
+                
+                $attributes = is_array($value) ? $value['attributes'] : [];
+                $val = is_array($value) ? $value['value'] : $value;
+                $newObject = $this->createElement($key, $val);
+                
+                foreach ($attributes as $attrName => $attrValue) {
+                    $newObject->setAttribute($attrName, $attrValue);
+                }
+                
+                $element->appendChild($newObject);
+            }
+            
+        }
     }
     
 }

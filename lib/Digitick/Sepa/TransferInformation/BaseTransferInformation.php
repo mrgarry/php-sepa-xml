@@ -24,6 +24,7 @@ namespace Digitick\Sepa\TransferInformation;
 
 use Digitick\Sepa\DomBuilder\DomBuilderInterface;
 use Digitick\Sepa\Exception\InvalidArgumentException;
+use Digitick\Sepa\TransferInformation\RegulatoryReporting;
 use Digitick\Sepa\Util\StringHelper;
 
 class BaseTransferInformation implements TransferInformationInterface
@@ -122,6 +123,12 @@ class BaseTransferInformation implements TransferInformationInterface
      * @var string|array
      */
     protected $postalAddress;
+    
+    /**
+     * RgltryRptg tag
+     * @var RegulatoryReporting
+     */
+    protected $regulatoryReporting;
 
     /**
      * @param string $amount
@@ -362,5 +369,21 @@ class BaseTransferInformation implements TransferInformationInterface
     public function setPostalAddress($postalAddress)
     {
         $this->postalAddress = $postalAddress;
+    }
+    
+    /**
+     * @return RegulatoryReporting|null
+     */
+    public function getRegulatoryReporting()
+    {
+        return $this->regulatoryReporting;
+    }
+    
+    /**
+     * @param RegulatoryReporting $regulatoryReporting
+     */
+    public function setRegulatoryReporting(RegulatoryReporting $regulatoryReporting)
+    {
+        $this->regulatoryReporting = $regulatoryReporting;
     }
 }
