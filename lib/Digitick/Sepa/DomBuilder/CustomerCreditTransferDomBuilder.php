@@ -348,7 +348,7 @@ class CustomerCreditTransferDomBuilder extends BaseDomBuilder
         }
         
         $regulatoryDom = $this->createElement('RgltryRptg');
-        $this->processRegulatory($regulatoryDom, $regulatoryData);
+        $this->processRegulatory($regulatoryDom, $regulatoryData->asArray());
         
         return $regulatoryDom;
     }
